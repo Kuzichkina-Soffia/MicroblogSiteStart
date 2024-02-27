@@ -1,0 +1,77 @@
+{% extends 'user/userpage.html' %}
+
+{% block title %}
+Мои статьи
+{% endblock %}
+
+{% block href %}
+
+<div class="container">
+    <div class="container">
+        <h3>Создать новую статью</h3>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="author" value="{{ user.id }}">
+            <h4>Название статьи:</h4>
+            {{ form.title }}<br>
+            <h4>Анонс статьи:</h4>
+            {{ form.intro }}<br>
+            <h4>Текст статьи:</h4>
+            {{ form.content }}<br>
+            <sapan>{{ error }}</sapan>
+            <input type="submit" class="btn btn-success" value="Создать статью">
+        </form>
+    </div>
+
+    <h3>Список моих cтатей</h3>
+    <div class="alert alert-info">
+        {% if news|length > 0 %}
+            {% for elem in news reversed %}
+                {% if elem.author == user.username %}
+                    <div class="alert alert-info">
+                        <h4>{{ elem.title }}</h4>
+                        <h6>Автор: {{ elem.author }}</h6>
+                        <p><em>{{ elem.intro }}</em></p>
+                        <article>{{ elem.content|linebreaks }}</article>
+                        <button class="btn btn-danger delete-article" data-article-id="{{ elem.id }}">Удалить статью</button> 
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <p>У меня пока нету статей</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    // Ожидаем загрузку страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        // Находим все кнопки с классом delete-article
+        var deleteButtons = document.querySelectorAll('.delete-article');
+        
+        // Добавляем обработчик события для каждой кнопки
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Получаем идентификатор статьи из атрибута data-article-id
+                var articleId = this.getAttribute('data-article-id');
+                
+                // Отправляем AJAX-запрос на сервер для удаления статьи
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/delete_article/' + articleId + '/');
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Если статья успешно удалена, скрываем ее
+                        button.parentNode.style.display = 'none';
+                    } else {
+                        // Если произошла ошибка, выводим сообщение об ошибке
+                        console.error(xhr.responseText);
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });
+</script>
+
+{% endblock %}

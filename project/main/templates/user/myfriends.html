@@ -1,0 +1,35 @@
+{% extends 'user/userpage.html' %}
+
+{% block title %}
+Мои друзья
+{% endblock %}
+
+{% block href %}
+<h4>Мои друзья</h4>
+{% if friends %}
+<div class="alert alert-info">
+    <ul>
+    {% for friend in friends %}
+        {% if friend.id != user.id %}
+            <li><a style="text-transform:capitalize" href="{% url 'people' user.id friend.username %}">{{ friend.first_name }} {{ friend.last_name }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</div>
+{% else %}
+<p>У вас еще нет друзей</p>
+{% endif %}
+
+<h4>Список всех пользователей</h4>
+{% if users|length > 0 %}
+    <div class="alert alert-info">
+    {% for subject in users %}
+        <li><a style="text-transform:capitalize" href="{% url 'people' user.id subject.username %}">{{ subject.first_name }} {{ subject.last_name }}</a></li>
+    {% endfor %}
+{% else %}
+    <p>Зарегистрированых пользователей нет</p>
+{% endif %}
+</div>
+
+
+{% endblock %}

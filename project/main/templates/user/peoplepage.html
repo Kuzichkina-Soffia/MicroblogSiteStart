@@ -1,0 +1,48 @@
+{% extends 'user/userpage.html' %}
+
+{% block title %}
+Страница пользователя  {{ people.first_name }} {{ people.last_name }}
+{% endblock %}
+
+{% block href %}
+<h2>Страница другого пользователя</h2>
+<h3 style="text-transform:capitalize">ФИО: {{ people.first_name }} {{ people.last_name }}</h3>
+<a href="{% url 'open_personal_chat' user.id people.username %}"><button>Написать пользователю</button></a>
+
+{% if status == True %}
+    <a href="{% url 'add_friend' user.id people.id %}"><button>Добавить в друзья</button></a>
+
+    <h3>Список cтатей пользователя</h3>
+        <div class="alert alert-info">
+                    <div class="alert alert-info">
+                        <article>Вы не сможете посмотреть статьи пользователя пока в друзья его не добавите</article>
+                    </div>
+        </div>
+{% else %}
+    <a href="{% url 'remove_friend' user.id people.id %}"><button>Убрать из друзей</button></a>
+
+    <h3>Список cтатей пользователя</h3>
+        <div class="alert alert-info">
+        {% if articles|length > 0 %}
+            {% for elem in articles reversed %}
+                {% if elem.author == people.username %}
+                    <div class="alert alert-info">
+                        <h4>{{ elem.title }}</h4>
+                        <h6>Автор: {{ elem.author }}</h6>
+                        <p><em>{{ elem.intro }}</em></p>
+                        <article>{{ elem.content|linebreaks }}</article>
+                    </div>
+                {% else %}
+                <p>У меня пока нету статей</p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>У меня пока нету статей</p>
+        {% endif %}
+        </div>
+
+{% endif %}
+
+
+
+{% endblock %}

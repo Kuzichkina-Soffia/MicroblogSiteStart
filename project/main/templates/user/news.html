@@ -1,0 +1,29 @@
+{% extends 'user/userpage.html' %}
+
+{% block title %}
+Новости
+{% endblock %}
+
+{% block href %}
+
+<div class="container">
+    <h3>Лента новостей</h3>
+    <div class="alert alert-info">
+        {% if news|length > 0 %}
+            {% for elem in news reversed %}
+                {% if elem.author != user.username %}
+                    <div class="alert alert-info">
+                        <h4>{{ elem.title }}</h4>
+                        <h6>Автор: <a href="{% url 'people' user.id elem.author %}"> {{ elem.author }}</a></h6>
+                        <p><em>{{ elem.intro }}</em></p>
+                        <p>{{ elem.content|linebreaks }}</p>
+                        <!-- <a href="{% url 'article_detail' elem.id %}" type="submit" class="btn btn-success">Открыть статью</a> -->
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <p>У нас еще нету статей</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

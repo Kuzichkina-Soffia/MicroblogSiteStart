@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Статьи
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Список cтатей</h1>
+    <div class="alert alert-info">
+        {% if news|length > 0 %}
+            {% for elem in news %}
+                <div class="alert alert-info">
+                    <h4>{{ elem.title }}</h4>
+                    <h6>Автор: {{ elem.author }}</h6>
+                    <p><em>{{ elem.intro }}</em></p>
+                    <p>{{ elem.content|linebreaks  }}</p>
+                    <a href="{% url 'article_detail' elem.id %}" type="submit" class="btn btn-success">Открыть статью</a>
+                </div>
+            {% endfor %}
+        {% else %}
+        <p>У нас еще нету статей</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

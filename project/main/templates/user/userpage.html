@@ -1,0 +1,26 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+Страница пользователя
+{% endblock %}
+
+{% block body %}
+<h1>Моя страница</h1>
+<h3>Логин: {{ user.username }}</h3>
+<h3 style="text-transform:capitalize">ФИО: {{ user.first_name }} {{ user.last_name }}</h3>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <a class="p-4 text-dark" href="mychats">Мои переписки</a>
+    <a class="p-4 text-dark" href="myfriends">Мои друзья</a>
+    <a class="p-4 text-dark" href="mysubscribes">Мои подписки</a>
+    <a class="p-4 text-dark" href="myarticles">Мои статьи</a>
+    <a class="p-4 text-dark" href="mychanels">Мои каналы</a>
+    <a class="p-4 text-dark" href="news">Лента новостей</a>
+</div>
+
+{% block href %}{% endblock %}
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+Создание статей
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Создание статьи</h1>
+    <form method="post">
+        {% csrf_token %}
+        <h4>Ваше имя:</h4>
+        {{ form.author }}<br>
+        {{ user.first_name }}
+        <h4>Название статьи:</h4>
+        {{ form.title }}<br>
+        <h4>Анонс статьи:</h4>
+        {{ form.intro }}<br>
+        <h4>Текст статьи:</h4>
+        {{ form.content }}<br>
+        <sapan>{{ error }}</sapan>
+        <input type="submit" class="btn btn-success" value="Создать статью">
+    </form>
+</div>
+{% endblock %}

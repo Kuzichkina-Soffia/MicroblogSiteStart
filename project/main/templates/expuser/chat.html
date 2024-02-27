@@ -1,0 +1,26 @@
+{% extends 'user/userpage.html' %}
+
+{% block title %}
+Чат
+{% endblock %}
+
+{% block href %}
+<h2>Чат с другим пользователем</h2>
+<h3 style="text-transform:capitalize">ФИО: {{ people.first_name }} {{ people.last_name }}</h3>
+<div class="container">
+    <h3></h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user" value="{{ user.id }}">
+        <h3>Написать сообщение: {{ form.content }}</h3><br>
+        <sapan>{{ error }}</sapan>
+        <input type="submit" class="btn btn-success" value="Отправить">
+    </form>
+</div>
+
+<div class="alert alert-info">
+    <div class="alert alert-info">
+
+    </div>
+</div>
+{% endblock %}

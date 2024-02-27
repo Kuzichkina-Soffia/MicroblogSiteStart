@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ article.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="alert alert-info">
+        {{ id }}
+        <h4>{{ article.title }}</h4>
+        <h6>Автор: {{ article.author }}</h6>
+        <p><em>{{ article.intro }}</em></p>
+        <p>{{ article.content|linebreaks  }}</p>
+        <a href="/articles" type="submit" class="btn btn-success">Назад</a>
+    </div>
+</div>
+{% endblock %}

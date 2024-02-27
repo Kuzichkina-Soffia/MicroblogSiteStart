@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h1>Регистрация</h1>
+    <form method="post">
+        {% csrf_token %}
+        <h4>Логин:</h4>
+        {{ form.username }}<br>
+        {% if form.errors %}
+            <p>{{ form.errors.username }}</p>
+        {% endif %}
+        <p><i>Логин это ваш номер телефона (например 00000000000)</i></p>
+        <h4>Имя:</h4>
+        {{ form.first_name }}<br>
+        <h4>Фамилия:</h4>
+        {{ form.last_name }}<br>
+        <h4>Пароль:</h4>
+        {{ form.password }}<br>
+        <sapan>{{ error }}</sapan>
+        <input type="submit" class="btn btn-success" value="Регистрация">
+    </form>
+</div>
+{% endblock %}
